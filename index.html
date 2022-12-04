@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title></title>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  
+<!-- AWAL LINK NASKAH -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+<!-- AKHIR LINK NASKAH -->
+
+<!-- AWAL GAYA CSS -->
+<style type="text/css">
+@import url(https://fonts.googleapis.com/css?family=Muli);
+*{transition:all 0.5s;-webkit-transition:all 0.5s;}
+
+.tombol_beralih{
+color:lawngreen;
+  font-size:30px;
+  border:1px solid white;
+  border-radius:30px;
+ display:inline-block;
+ height:40px;
+  width:40px;
+  cursor:pointer;
+}
+.ico{
+  margin-left:7px;
+  margin-top:-4px;
+}
+.tombol_beralih:hover{
+  -ms-transform: rotate(360deg); /* IE 9 */
+    -webkit-transform: rotate(360deg); /* Safari */
+    transform: rotate(360deg);
+}
+.bilah_samping{
+  position:fixed;
+  width:25vh;
+  right:-25vh;
+  box-shadow:0px 0px 10px 5px lawngreen;
+  background-color:#1a1a1a;
+  border-left:5px solid white;
+  height:100%;
+  top:0px;
+}
+.bilah_samping h5{
+  color:lawngreen;
+  text-align:center;
+  font-family: 'Muli', sans-serif;
+}
+
+.bilah_samping h4{
+  color:lawngreen;
+  text-align:center;
+  font-family: 'Muli', sans-serif;
+}
+
+.bilah_samping h1{
+  color:white;
+  text-align:center;
+  font-family: 'Muli', sans-serif;
+}
+
+.bilah_samping.active{
+  right:0px;
+}
+.notibox{
+  color:lawngreen;
+  font-family: 'Muli', sans-serif;
+  background-color:#0d0d0d;
+  width:calc(100% - 60px);
+  padding:15px;
+  margin:15px;
+  border-radius:4px;
+  position:relative;
+}
+
+a{
+ text-decoration: none;
+}
+.sosial-icon{
+  color:white;
+position:absolute;
+right:7px;
+top:10px;
+cursor:pointer;
+padding:0px;
+padding-left:10px;
+padding-right:10px;
+}
+.sosial:hover{
+  color:black;
+  background-color:white;
+}
+.cancel{
+  position:absolute;
+  right:7px;
+  top:10px;
+  cursor:pointer;
+  padding:3px;
+  padding-left:8px;
+  padding-right:8px;
+  border-radius:20px;
+}
+.cancel:hover{
+  color:black;
+  background-color:white;
+}
+.gone{
+  display:none;
+}
+</style>
+<style type="text/css">
+/*
+BEM:  Bloque - Elemento - Modificador
+*/
+
+/*Variables*/
+:root {
+   --black-color: #17181c;
+   --blue-color: #3e50b4;
+   --white-rbg-color: 255, 255, 255;
+   --green-rbg-color: 0, 212, 113;
+}
+
+
+
+.cursor {
+z-index:999999999999999999999;
+   width: 20px;
+   height: 20px;
+   border: 10px solid rgba(var(--white-rbg-color), .8);
+   border-radius: 50%;
+   position: absolute;
+   transition-duration: 200ms;
+   transition-timing-function: ease-out;
+   animation: cursor-animate 550ms infinite alternate;
+}
+
+.cursor::after {
+   content: "";
+   width: 40px;
+   height: 40px;
+   border: 15px solid rgba(var(--white-rbg-color), .2);
+   border-radius: 50%;
+   position: absolute;
+   top: -25px;
+   left: -25px;
+   animation: cursor-animate-2 550ms infinite alternate;
+}
+
+/*Modificador*/
+.cursor--expand {
+   animation: cursor-animate-3 550ms forwards;
+   border: 10px solid rgb(var(--green-rbg-color));
+}
+
+.cursor--expand::after {
+   border: 15px solid rgba(var(--green-rbg-color), .3);
+}
+
+/*Keyframes*/
+@keyframes cursor-animate {
+   from {
+      transform: scale(1);
+   }
+
+   to {
+      transform: scale(1.5)
+   }
+}
+
+@keyframes cursor-animate-2 {
+   from {
+      transform: scale(1);
+   }
+
+   to {
+      transform: scale(.3);
+   }
+}
+
+@keyframes cursor-animate-3 {
+   0% {
+      transform: scale(1);
+   }
+
+   50% {
+      transform: scale(3);
+   }
+
+   100% {
+      transform: scale(1);
+      opacity: 0;
+   }
+}
+
+</style>
+<style type="text/css">
+  html,
+  body,
+  canvas {
+  z-index:-9999;
+  padding:0;
+  margin: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  }
+</style>
+<!-- AKHIR GAYA CSS -->
+</head>
+<body><canvas></canvas>
+<div class="cursor"></div>
+<header>
+</header>
+<nav>
+</nav>
+<main>
+<aside>
+<div class="tombol_beralih"><div class="ico">↻</div></div>
+<div class="bilah_samping">
+  <h1>LINUXSEC</h1>
+ <h4><div id="MyClockDisplay" onload="showTime()"></div></h4>
+ <h5><script type='text/javascript'>
+  
+  var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  
+  var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
+  
+  var date = new Date();
+  
+  var day = date.getDate();
+  
+  var month = date.getMonth();
+  
+  var thisDay = date.getDay(),
+  
+  thisDay = myDays[thisDay];
+  
+  var yy = date.getYear();
+  
+  var year = (yy < 1000) ? yy + 1900 : yy;
+  
+  document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);
+  
+  </script>
+  </h5>
+  
+  <div class="notibox">
+    GitHub
+    <a><div class="sosial-icon" id=""><i class="fab fa-github social github fa-2x"></i></div></a>
+    
+    <!--<div class="cancel">✕</div>-->
+  </div>
+  <div class="notibox">
+    Instagram
+    <a><div class="sosial-icon" id=""><i class="fab fa-instagram social instagram fa-2x"></i></div></a>
+    
+    <!--<div class="cancel">✕</div>-->
+  </div>
+  
+  <h4>Your current location is:</h4><h5> <span class="location"></span></h5>
+  
+</div>
+<script type="text/javascript">
+var $locationText = $(".location");
+
+// Check for geolocation browser support and execute success method
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    geoLocationSuccess,
+    geoLocationError,
+    { timeout: 10000 }
+  );
+} else {
+  alert("your browser doesn't support geolocation");
+}
+function geoLocationSuccess(pos) {
+  // get user lat,long
+  var myLat = pos.coords.latitude,
+    myLng = pos.coords.longitude,
+    loadingTimeout;
+
+  var loading = function () {
+    $locationText.text("fetching...");
+  };
+
+  loadingTimeout = setTimeout(loading, 600);
+
+  var request = $.get(
+    "https://nominatim.openstreetmap.org/reverse?format=json&lat=" +
+      myLat +
+      "&lon=" +
+      myLng
+  )
+    .done(function (data) {
+      if (loadingTimeout) {
+        clearTimeout(loadingTimeout);
+        loadingTimeout = null;
+        $locationText.text(data.display_name);
+      }
+    })
+    .fail(function () {
+      // handle error
+    });
+}
+
+function geoLocationError(error) {
+  var errors = {
+    1: "Permission denied",
+    2: "Position unavailable",
+    3: "Request timeout"
+  };
+  alert("Error: " + errors[error.code]);
+}
+
+</script>
+</aside>
+<section>
+</section>
+<article>
+</article>
+</main>
+<footer>
+</footer>
+<!-- AWAL KOLOM NASKAH -->
+<script type="text/javascript">
+function showTime(){
+    var date = new Date();
+    var h = date.getHours(); // 0 - 23
+    var m = date.getMinutes(); // 0 - 59
+    var s = date.getSeconds(); // 0 - 59
+    var session = "AM";
+    
+    if(h == 0){
+        h = 12;
+    }
+    
+    if(h > 12){
+        h = h - 12;
+        session = "PM";
+    }
+    
+    h = (h < 10) ? "0" + h : h;
+    m = (m < 10) ? "0" + m : m;
+    s = (s < 10) ? "0" + s : s;
+    
+    var time = h + ":" + m + ":" + s + " " + session;
+    document.getElementById("MyClockDisplay").innerText = time;
+    document.getElementById("MyClockDisplay").textContent = time;
+    
+    setTimeout(showTime, 1000);
+    
+}
+
+showTime();
+</script>
+<script type="text/javascript">
+console.clear();
+
+let angle = 3.14/4;
+let length = 2;
+
+let particles = [];
+
+let mouseHasMoved = false;
+
+function setup() {
+createCanvas(windowWidth, windowHeight);
+colorMode(HSB);
+background(0, 0, 0);
+noStroke();
+angle = PI/3;
+for (let i=0; i<500; i++) {
+new Particle(createVector(random(width), random(height)));
+}
+}
+
+function draw() {
+if (!mouseHasMoved) {
+for (let i=0; i<5; i++) {
+new Particle(createVector(random(width), random(height)));
+}
+}
+background(0, 0, 0, .1);
+for (let p of particles) {
+p.update();
+p.draw();
+}
+}
+
+function mouseMoved() {
+mouseHasMoved = true;
+for (let i=0; i<5; i++) {
+new Particle(createVector(mouseX, mouseY));
+}
+}
+
+class Particle {
+constructor(pos) {
+this.pos = pos;
+this.vel = createVector(random(length*.5, length*1.5), 0).rotate(angle * round(random(0, 360)));
+this.hue = random(90, 150);
+this.sat = 100;
+this.val = 100;
+this.lifetime = random(50, 150);
+this.age = 0;
+particles.push(this);
+}
+
+update() {
+if (this.age >= this.lifetime) {this.remove()}
+this.age += 1;
+if (this.age % 10 == 0) {
+this.vel.rotate(random([-angle, angle]));
+}
+this.pos.add(this.vel);
+}
+
+draw() {
+push()
+stroke(this.hue, this.sat, this.val, 1-this.age/this.lifetime);
+translate(this.pos.x, this.pos.y);
+line(0, 0, -this.vel.x, -this.vel.y);
+pop()
+}
+
+remove() {
+particles.splice(particles.indexOf(this), 1);
+}
+}
+</script>
+<script type="text/javascript">
+$(".tombol_beralih").click(function () { console.log("tombol_beralih bilah_samping");
+	$(".bilah_samping").toggleClass('active');
+});
+$(".cancel").click(function () { console.log("tombol_beralih visibility");
+	$(this).parent().toggleClass('gone');
+});
+</script>
+<script type="text/javascript">(() => { 
+  
+  const cursor = document.querySelector('.cursor');
+  
+  document.addEventListener('mousemove', e => {
+  cursor.setAttribute('style', `top:  ${e.pageY - 25}px; left: ${e.pageX - 25}px;`);
+  });
+  
+  document.addEventListener('click', () => { 
+  console.log("%c Click...!!!", "font-size: 20px; color:mediumspringgreen;");
+  
+  cursor.classList.add('cursor--expand');
+  console.log(cursor.classList);
+  
+  setTimeout(() => {
+  cursor.classList.remove('cursor--expand');
+  }, 500);
+  });
+  })();
+  
+  
+  </script>
+<!-- AKHIR KOLOM NASKAH -->
+</body>
+</html>
